@@ -7,7 +7,6 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  ListItemSecondaryAction,
   Checkbox,
   IconButton,
   Paper,
@@ -26,7 +25,7 @@ const TodoList: React.FC = () => {
   const deleteTodo = useDeleteTodo();
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
-  const handleAddTodo = (e: React.FormEvent) => {
+  const handleAddTodo = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (newTodoTitle.trim()) {
       addTodo.mutate(newTodoTitle);
@@ -75,6 +74,26 @@ const TodoList: React.FC = () => {
                 borderRadius: 1,
                 boxShadow: 1,
               }}
+              secondaryAction={
+                <>
+                  <IconButton
+                    edge="end"
+                    aria-label="details"
+                    onClick={() => router.push(`/todo/${todo.id}`)}
+                  >
+                    <ArrowForwardIosIcon fontSize="small"/>
+                  </IconButton>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => deleteTodo.mutate(todo.id)}
+                    disabled={deleteTodo.isPending}
+                    sx={{ml: 1}}
+                  >
+                    <DeleteIcon/>
+                  </IconButton>
+                </>
+              }
             >
               <ListItemIcon sx={{pl: 2}}>
                 <Checkbox
@@ -91,24 +110,6 @@ const TodoList: React.FC = () => {
                   color: todo.completed ? 'text.secondary' : 'text.primary',
                 }}
               />
-              <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  aria-label="details"
-                  onClick={() => router.push(`/todo/${todo.id}`)}
-                >
-                  <ArrowForwardIosIcon fontSize="small"/>
-                </IconButton>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => deleteTodo.mutate(todo.id)}
-                  disabled={deleteTodo.isPending}
-                  sx={{ml: 1}}
-                >
-                  <DeleteIcon/>
-                </IconButton>
-              </ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>
