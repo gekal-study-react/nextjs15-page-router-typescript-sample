@@ -5,6 +5,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {createTheme, ThemeProvider} from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import {Layout} from '@/components/Layout';
+import {RouteLoading} from '@/components/RouteLoading';
 
 const theme = createTheme();
 
@@ -32,7 +33,9 @@ export default function App({Component, pageProps}: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <Layout>
-          <Component {...pageProps} />
+          <RouteLoading>
+            <Component {...pageProps} />
+          </RouteLoading>
         </Layout>
       </ThemeProvider>
     </QueryClientProvider>
