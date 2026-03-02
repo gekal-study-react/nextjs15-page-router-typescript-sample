@@ -15,6 +15,24 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
   const isMutating = useIsMutating();
   const isFetching = useIsFetching();
 
+  const [isRouteChanging, setIsRouteChanging] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleStart = () => setIsRouteChanging(true);
+    const handleComplete = () => setIsRouteChanging(false);
+    const handleError = () => setIsRouteChanging(false);
+
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleError);
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleError);
+    };
+  }, [router]);
+
   return (
     <Box sx={{flexGrow: 1}}>
       <AppBar position="static">
@@ -31,13 +49,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
       </AppBar>
       <Container maxWidth="sm" sx={{mt: 4}}>
         <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
-          <Suspense
-            fallback={
-              <Box display="flex" justifyContent="center" mt={4}>
-                <CircularProgress/>
-              </Box>
-            }
-          >
+          <Suspense fallback={null}>
             {children}
           </Suspense>
         </ErrorBoundary>
@@ -51,7 +63,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
           flexDirection: 'column',
           gap: 2,
         }}
-        open={isMutating > 0 || isFetching > 0}
+        open={isMutating > 0 || isFetching > 0 || isRouteChanging}
       >
         <CircularProgress color="inherit"/>
         <Typography variant="h6" component="div">
