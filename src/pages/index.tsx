@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Typography,
   TextField,
@@ -15,12 +15,11 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Layout } from '../components/Layout';
-import { useTodos, useAddTodo, useToggleTodo, useDeleteTodo } from '../hooks/useTodos';
+import {useTodos, useAddTodo, useToggleTodo, useDeleteTodo} from '../hooks/useTodos';
 import Link from 'next/link';
 
 const TodoList: React.FC = () => {
-  const { data: todos } = useTodos();
+  const {data: todos} = useTodos();
   const addTodo = useAddTodo();
   const toggleTodo = useToggleTodo();
   const deleteTodo = useDeleteTodo();
@@ -36,11 +35,11 @@ const TodoList: React.FC = () => {
 
   return (
     <Box>
-      <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ fontWeight: 'bold', mt: 2 }}>
+      <Typography variant="h4" component="h1" gutterBottom align="center" sx={{fontWeight: 'bold', mt: 2}}>
         TODO リスト
       </Typography>
 
-      <Paper component="form" onSubmit={handleAddTodo} sx={{ p: 2, mb: 4, display: 'flex', gap: 1, borderRadius: 2 }}>
+      <Paper component="form" onSubmit={handleAddTodo} sx={{p: 2, mb: 4, display: 'flex', gap: 1, borderRadius: 2}}>
         <TextField
           fullWidth
           size="small"
@@ -53,14 +52,14 @@ const TodoList: React.FC = () => {
           variant="contained"
           type="submit"
           disabled={addTodo.isPending || !newTodoTitle.trim()}
-          sx={{ minWidth: 80 }}
+          sx={{minWidth: 80}}
         >
           追加
         </Button>
       </Paper>
 
       {todos.length === 0 ? (
-        <Typography variant="body1" color="text.secondary" align="center" sx={{ mt: 8 }}>
+        <Typography variant="body1" color="text.secondary" align="center" sx={{mt: 8}}>
           登録されているタスクはありません。
         </Typography>
       ) : (
@@ -76,7 +75,7 @@ const TodoList: React.FC = () => {
                 boxShadow: 1,
               }}
             >
-              <ListItemIcon sx={{ pl: 2 }}>
+              <ListItemIcon sx={{pl: 2}}>
                 <Checkbox
                   edge="start"
                   checked={todo.completed}
@@ -92,9 +91,9 @@ const TodoList: React.FC = () => {
                 }}
               />
               <ListItemSecondaryAction>
-                <Link href={`/todo/${todo.id}`} passHref legacyBehavior>
+                <Link href={`/todo/${todo.id}`} passHref>
                   <IconButton edge="end" aria-label="details">
-                    <ArrowForwardIosIcon fontSize="small" />
+                    <ArrowForwardIosIcon fontSize="small"/>
                   </IconButton>
                 </Link>
                 <IconButton
@@ -102,9 +101,9 @@ const TodoList: React.FC = () => {
                   aria-label="delete"
                   onClick={() => deleteTodo.mutate(todo.id)}
                   disabled={deleteTodo.isPending}
-                  sx={{ ml: 1 }}
+                  sx={{ml: 1}}
                 >
-                  <DeleteIcon />
+                  <DeleteIcon/>
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -117,8 +116,6 @@ const TodoList: React.FC = () => {
 
 export default function Home() {
   return (
-    <Layout>
-      <TodoList />
-    </Layout>
+    <TodoList/>
   );
 }

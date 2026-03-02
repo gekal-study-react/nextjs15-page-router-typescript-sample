@@ -1,5 +1,5 @@
-import { useSuspenseQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { todoApi } from '../api/todoApi';
+import {useSuspenseQuery, useMutation, useQueryClient} from '@tanstack/react-query';
+import {todoApi} from '@/api/todoApi';
 
 export const useTodos = () => {
   return useSuspenseQuery({
@@ -20,7 +20,7 @@ export const useAddTodo = () => {
   return useMutation({
     mutationFn: (title: string) => todoApi.addTodo(title),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      queryClient.invalidateQueries({queryKey: ['todos']});
     },
   });
 };
@@ -30,7 +30,7 @@ export const useToggleTodo = () => {
   return useMutation({
     mutationFn: (id: string) => todoApi.toggleTodo(id),
     onSuccess: (updated) => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      queryClient.invalidateQueries({queryKey: ['todos']});
       queryClient.setQueryData(['todos', updated.id], updated);
     },
   });
@@ -41,7 +41,7 @@ export const useDeleteTodo = () => {
   return useMutation({
     mutationFn: (id: string) => todoApi.deleteTodo(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      queryClient.invalidateQueries({queryKey: ['todos']});
     },
   });
 };

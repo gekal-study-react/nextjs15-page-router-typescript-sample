@@ -56,7 +56,7 @@ export const todoApi = {
     await delay(300);
     const todos = getTodosFromStorage();
     const updatedTodos = todos.map((t) =>
-      t.id === id ? { ...t, completed: !t.completed } : t
+      t.id === id ? {...t, completed: !t.completed} : t
     );
     saveTodosToStorage(updatedTodos);
     const updated = updatedTodos.find((t) => t.id === id);
