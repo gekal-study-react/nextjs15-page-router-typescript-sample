@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
-import {Box, CircularProgress} from '@mui/material';
+import {Loading} from "@/components/Loading";
 
 interface RouteLoadingProps {
   children: React.ReactNode;
@@ -32,9 +32,7 @@ export const RouteLoading: React.FC<RouteLoadingProps> = ({children}) => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" mt={4}>
-        <CircularProgress/>
-      </Box>
+      <Loading/>
     );
   }
 
