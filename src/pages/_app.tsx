@@ -32,11 +32,11 @@ export default function App({Component, pageProps}: AppProps) {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline/>
-        <Layout>
-          <RouteLoading>
+        <RouteLoading>
+          <Layout>
             <Component {...pageProps} />
-          </RouteLoading>
-        </Layout>
+          </Layout>
+        </RouteLoading>
       </ThemeProvider>
     </QueryClientProvider>
   );

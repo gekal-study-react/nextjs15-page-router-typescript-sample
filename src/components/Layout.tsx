@@ -2,7 +2,7 @@ import React, {Suspense} from 'react';
 import {AppBar, Box, Container, Toolbar, Typography} from '@mui/material';
 import {ErrorBoundary} from 'react-error-boundary';
 import {ErrorFallback} from './ErrorFallback';
-import {useQueryErrorResetBoundary} from '@tanstack/react-query';
+import {useIsFetching, useIsMutating, useQueryErrorResetBoundary} from '@tanstack/react-query';
 import {useRouter} from 'next/router';
 import {Loading} from "@/components/Loading";
 
@@ -13,6 +13,8 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({children}) => {
   const {reset} = useQueryErrorResetBoundary();
   const router = useRouter();
+  const isMutating = useIsMutating();
+  const isFetching = useIsFetching();
 
   return (
     <Box sx={{flexGrow: 1}}>
@@ -37,6 +39,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
           </Suspense>
         </ErrorBoundary>
       </Container>
+      {(isMutating > 0 || isFetching > 0) && <Loading/>}
     </Box>
   );
 };
