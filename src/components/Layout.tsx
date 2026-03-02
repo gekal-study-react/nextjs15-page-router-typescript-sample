@@ -3,7 +3,7 @@ import {Container, AppBar, Toolbar, Typography, Box, CircularProgress} from '@mu
 import {ErrorBoundary} from 'react-error-boundary';
 import {ErrorFallback} from './ErrorFallback';
 import {useQueryErrorResetBoundary} from '@tanstack/react-query';
-import Link from 'next/link';
+import {useRouter} from 'next/router';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,16 +11,20 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({children}) => {
   const {reset} = useQueryErrorResetBoundary();
+  const router = useRouter();
 
   return (
     <Box sx={{flexGrow: 1}}>
       <AppBar position="static">
         <Toolbar>
-          <Link href="/" style={{textDecoration: 'none', color: 'inherit'}}>
-            <Typography variant="h6" component="div">
-              TODO アプリ
-            </Typography>
-          </Link>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{cursor: 'pointer'}}
+            onClick={() => router.push('/')}
+          >
+            TODO アプリ
+          </Typography>
         </Toolbar>
       </AppBar>
       <Container maxWidth="sm" sx={{mt: 4}}>

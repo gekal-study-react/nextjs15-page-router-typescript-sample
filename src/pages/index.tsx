@@ -15,10 +15,11 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import {useRouter} from 'next/router';
 import {useTodos, useAddTodo, useToggleTodo, useDeleteTodo} from '../hooks/useTodos';
-import Link from 'next/link';
 
 const TodoList: React.FC = () => {
+  const router = useRouter();
   const {data: todos} = useTodos();
   const addTodo = useAddTodo();
   const toggleTodo = useToggleTodo();
@@ -91,11 +92,13 @@ const TodoList: React.FC = () => {
                 }}
               />
               <ListItemSecondaryAction>
-                <Link href={`/todo/${todo.id}`} passHref>
-                  <IconButton edge="end" aria-label="details">
-                    <ArrowForwardIosIcon fontSize="small"/>
-                  </IconButton>
-                </Link>
+                <IconButton
+                  edge="end"
+                  aria-label="details"
+                  onClick={() => router.push(`/todo/${todo.id}`)}
+                >
+                  <ArrowForwardIosIcon fontSize="small"/>
+                </IconButton>
                 <IconButton
                   edge="end"
                   aria-label="delete"

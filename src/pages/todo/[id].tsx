@@ -8,8 +8,7 @@ import {
   Divider,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {useTodo} from '../../hooks/useTodos';
-import Link from 'next/link';
+import {useTodo} from '@/hooks/useTodos';
 
 const TodoDetail: React.FC = () => {
   const router = useRouter();
@@ -18,11 +17,13 @@ const TodoDetail: React.FC = () => {
 
   return (
     <Box>
-      <Link href="/" passHref>
-        <Button startIcon={<ArrowBackIcon/>} sx={{mb: 2}}>
-          一覧に戻る
-        </Button>
-      </Link>
+      <Button
+        startIcon={<ArrowBackIcon/>}
+        sx={{mb: 2}}
+        onClick={() => router.push('/')}
+      >
+        一覧に戻る
+      </Button>
 
       <Paper sx={{p: 3, borderRadius: 2}}>
         <Typography variant="h5" component="h1" gutterBottom sx={{fontWeight: 'bold'}}>
