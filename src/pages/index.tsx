@@ -15,7 +15,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {useRouter} from 'next/router';
-import {useTodos, useAddTodo, useToggleTodo, useDeleteTodo} from '../hooks/useTodos';
+import {useTodos, useAddTodo, useToggleTodo, useDeleteTodo} from '@/hooks/useTodos';
 
 const TodoList: React.FC = () => {
   const router = useRouter();
