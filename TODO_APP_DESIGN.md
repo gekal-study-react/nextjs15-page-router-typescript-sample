@@ -1,39 +1,43 @@
-# TODO アプリ 設計書
+# TODO アプリ 設計仕様書
 
-このドキュメントでは、Next.js 15 (Pages Router)、TanStack Query、MUI を使用した CSR (クライアントサイドレンダリング) 静的サイト TODO アプリケーションのアーキテクチャと実装の詳細について説明します。
+このドキュメントは、Next.js 15 (Pages Router)、TanStack Query、MUI を活用した CSR（クライアントサイドレンダリング）ベースの TODO アプリケーションのアーキテクチャと実装詳細をまとめたものです。
 
 ## 1. 技術スタック
+
 - **フレームワーク**: Next.js 15 (Pages Router)
-- **状態管理**: TanStack Query (React Query) v5
-- **UI フレームワーク**: MUI (Material UI) v7 (React 19 サポート)
-- **データ取得**: ローカルストレージを使用したモック API、または遅延を伴うシンプルなオブジェクトによる擬似的なデータ取得。
-- **エラーハンドリング**: `react-error-boundary` と TanStack Query の `throwOnError: true` (`useSuspenseQuery` ではデフォルト) を使用。
-- **スタイリング**: MUI の `sx` プロップと Emotion。
+- **状態管理・データ取得**: TanStack Query (v5)
+- **UI コンポーネント**: MUI (v7)
+- **データ永続化**: ブラウザの `localStorage`
+- **エラー管理**: `react-error-boundary` + TanStack Query
 
-## 2. 主要コンポーネントと実装詳細
-- **`src/pages/_app.tsx`**:
-  - TanStack Query 用の `QueryClientProvider`。
-  - MUI の `ThemeProvider` と `CssBaseline`。
-  - グローバルな `ErrorBoundary` ラッパー。
-  - `useSuspenseQuery` 用の `Suspense` ラッパー。
-- **`src/hooks/useTodos.ts`**:
-  - TODO の取得、追加、更新、削除を行うカスタムフック。
-  - 取得には `useSuspenseQuery` を使用。
-  - 更新系には `useMutation` を使用。
-- **`src/api/todoApi.ts`**:
-  - 永続化をシミュレートするための `localStorage` と、ネットワーク遅延をシミュレートするための `setTimeout` を使用したモック API の実装。
-- **ページ**:
-  - `/`: TODO リストと新規追加用フォーム。
-  - `/todo/[id]`: 特定の TODO の詳細ビュー（複数ページのデモンストレーション用）。
+## 2. 実装のポイント
 
-## 3. グローバルエラーハンドリング
-- `react-error-boundary` の `ErrorBoundary` を使用。
-- `useSuspenseQuery` はエラーが発生すると、自動的に最も近いエラー境界にエラーをスローします。
-- エラー発生時には「再試行」ボタンを含むフォールバック UI が表示されます。
+### データフェッチ (`useSuspenseQuery`)
+React の Suspense 機能を活用し、データ取得中のローディング状態を宣言的に記述しています。
+`useSuspenseQuery` を使用することで、データが利用可能な状態であることを前提にコンポーネントを記述でき、コードの可読性を高めています。
 
-## 4. UI コンポーネント (MUI)
-- `Container`, `Box`, `Typography`, `List`, `ListItem`, `TextField`, `Button`, `Checkbox`, `IconButton`, `CircularProgress` (Suspense のフォールバック用)。
-- シンプルなナビゲーション用の `AppBar`。
+### モック API 層
+`src/api/todoApi.ts` では、`localStorage` を利用した擬似的な API レイヤーを実装しています。
+ネットワーク遅延（`setTimeout`）やランダムなエラーを意図的に発生させることで、実際の Web アプリケーションに近い挙動をシミュレートしています。
 
-## 5. 永続化
-- TODO は `localStorage` に保存され、CSR 環境でのページリロード間でもデータが保持されます。
+### グローバルエラーハンドリング
+`react-error-boundary` を使用し、データ取得エラーが発生した際にアプリケーション全体がクラッシュするのを防いでいます。
+エラー発生時には `ErrorFallback` コンポーネントが表示され、ユーザーが「再試行」をクリックすることで、TanStack Query のキャッシュをリセットし再取得を試みることができます。
+
+## 3. ディレクトリ構成
+
+- **`src/pages`**: 
+  - `_app.tsx`: 各種 Provider の設定とグローバルなエラー境界の配置
+  - `index.tsx`: TODO リスト一覧と追加フォーム
+  - `todo/[id].tsx`: TODO の詳細表示
+- **`src/hooks/useTodos.ts`**: TanStack Query をラップしたカスタムフック群。ロジックをコンポーネントから分離。
+- **`src/components`**: 
+  - `Layout.tsx`: 共通レイアウト（AppBar, Container）と Suspense/ErrorBoundary の配置
+  - `ErrorFallback.tsx`: エラー時の UI
+- **`src/api/todoApi.ts`**: `localStorage` を操作する非同期関数群
+
+## 4. UI/UX の工夫
+
+- **レスポンシブデザイン**: MUI のコンポーネントを使用し、モバイルとデスクトップ両方で最適に表示。
+- **インタラクティブなフィードバック**: TODO の追加・削除・状態変更時に MUI のアニメーションやローディング状態を適切に表示。
+- **ページ遷移**: Next.js の `Link` を使用したスムーズなクライアントサイド遷移。

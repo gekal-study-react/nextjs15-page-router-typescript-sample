@@ -24,7 +24,7 @@ export const todoApi = {
     await delay(1000);
     // Simulate random error (10% chance)
     if (Math.random() < 0.1) {
-      throw new Error('Failed to fetch todos');
+      throw new Error('データの取得に失敗しました');
     }
     return getTodosFromStorage();
   },
@@ -34,7 +34,7 @@ export const todoApi = {
     const todos = getTodosFromStorage();
     const todo = todos.find((t) => t.id === id);
     if (!todo) {
-      throw new Error(`Todo with id ${id} not found`);
+      throw new Error(`ID: ${id} のタスクが見つかりませんでした`);
     }
     return todo;
   },

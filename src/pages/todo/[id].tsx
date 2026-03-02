@@ -21,40 +21,40 @@ const TodoDetail: React.FC = () => {
     <Box>
       <Link href="/" passHref legacyBehavior>
         <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
-          リストに戻る
+          一覧に戻る
         </Button>
       </Link>
       
-      <Paper sx={{ p: 3 }}>
-        <Typography variant="h5" component="h1" gutterBottom>
-          TODO 詳細
+      <Paper sx={{ p: 3, borderRadius: 2 }}>
+        <Typography variant="h5" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
+          タスク詳細
         </Typography>
-        <Divider sx={{ mb: 2 }} />
+        <Divider sx={{ mb: 3 }} />
         
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="overline" color="text.secondary">
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="overline" color="text.secondary" sx={{ fontWeight: 'bold' }}>
             タイトル
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" sx={{ mt: 0.5 }}>
             {todo.title}
           </Typography>
         </Box>
         
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="overline" color="text.secondary">
-            ステータス
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="overline" color="text.secondary" sx={{ fontWeight: 'bold' }}>
+            状態
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" sx={{ mt: 0.5 }}>
             {todo.completed ? '完了' : '未完了'}
           </Typography>
         </Box>
         
         <Box>
-          <Typography variant="overline" color="text.secondary">
+          <Typography variant="overline" color="text.secondary" sx={{ fontWeight: 'bold' }}>
             作成日時
           </Typography>
-          <Typography variant="body1">
-            {new Date(todo.createdAt).toLocaleString()}
+          <Typography variant="body1" sx={{ mt: 0.5 }}>
+            {new Date(todo.createdAt).toLocaleString('ja-JP')}
           </Typography>
         </Box>
       </Paper>

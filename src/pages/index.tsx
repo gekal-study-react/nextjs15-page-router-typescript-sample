@@ -36,15 +36,15 @@ const TodoList: React.FC = () => {
 
   return (
     <Box>
-      <Typography variant="h4" component="h1" gutterBottom align="center">
+      <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ fontWeight: 'bold', mt: 2 }}>
         TODO リスト
       </Typography>
 
-      <Paper component="form" onSubmit={handleAddTodo} sx={{ p: 2, mb: 4, display: 'flex', gap: 1 }}>
+      <Paper component="form" onSubmit={handleAddTodo} sx={{ p: 2, mb: 4, display: 'flex', gap: 1, borderRadius: 2 }}>
         <TextField
           fullWidth
           size="small"
-          placeholder="何をする必要がありますか？"
+          placeholder="新しいタスクを入力..."
           value={newTodoTitle}
           onChange={(e) => setNewTodoTitle(e.target.value)}
           disabled={addTodo.isPending}
@@ -53,14 +53,15 @@ const TodoList: React.FC = () => {
           variant="contained"
           type="submit"
           disabled={addTodo.isPending || !newTodoTitle.trim()}
+          sx={{ minWidth: 80 }}
         >
           追加
         </Button>
       </Paper>
 
       {todos.length === 0 ? (
-        <Typography variant="body1" color="text.secondary" align="center">
-          TODO がまだありません。上から追加してください！
+        <Typography variant="body1" color="text.secondary" align="center" sx={{ mt: 8 }}>
+          登録されているタスクはありません。
         </Typography>
       ) : (
         <List>

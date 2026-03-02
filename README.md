@@ -1,40 +1,35 @@
-これは、[`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app) でブートストラップされた [Next.js](https://nextjs.org) プロジェクトです。
+# Next.js 15 (Pages Router) TODO アプリ サンプル
 
-## はじめに
+このプロジェクトは、Next.js 15 の Pages Router を使用し、TanStack Query と MUI を統合した CSR（クライアントサイドレンダリング）ベースの TODO アプリケーションのサンプルです。
 
-まず、開発サーバーを起動します。
+## 主な特徴
+
+- **Next.js 15 (Pages Router)**: 最新バージョンの Next.js を使用。
+- **CSR & 静的サイト構成**: 全てのデータ処理をクライアントサイドで行い、静的サイトとして動作します。
+- **TanStack Query (v5)**: `useSuspenseQuery` を活用した効率的なデータ取得とキャッシュ管理。
+- **MUI (v7)**: 洗練された UI コンポーネントとレスポンシブデザイン。
+- **グローバルエラーハンドリング**: `react-error-boundary` と TanStack Query を連携させたエラー管理。
+- **ローカル永続化**: ブラウザの `localStorage` を使用してデータを保存。
+
+## クイックスタート
+
+まず、依存関係をインストールし、開発サーバーを起動します。
 
 ```bash
-npm run dev
-# または
-yarn dev
-# または
+pnpm install
 pnpm dev
-# または
-bun dev
 ```
 
-ブラウザで [http://localhost:3000](http://localhost:3000) を開き、結果を確認してください。
+ブラウザで [http://localhost:3000](http://localhost:3000) を開き、アプリを確認してください。
 
-`pages/index.tsx` を編集し始めると、ページが自動的に更新されます。
+## プロジェクト構成
 
-[API ルート](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) は [http://localhost:3000/api/hello](http://localhost:3000/api/hello) でアクセスできます。このエンドポイントは `pages/api/hello.ts` で編集可能です。
+- `src/pages`: ページコンポーネント
+- `src/components`: 共通 UI コンポーネント
+- `src/hooks`: TanStack Query を使用したカスタムフック
+- `src/api`: `localStorage` を使用した擬似 API レイヤー
+- `TODO_APP_DESIGN.md`: 詳細な設計仕様書
 
-`pages/api` ディレクトリは `/api/*` にマッピングされています。このディレクトリ内のファイルは、React ページではなく [API ルート](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) として扱われます。
+## ライセンス
 
-このプロジェクトは、Vercel の新しいフォントファミリーである [Geist](https://vercel.com/font) を自動的に最適化してロードするために [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) を使用しています。
-
-## 詳細情報
-
-Next.js について詳しく知るには、以下のリソースを参照してください。
-
-- [Next.js ドキュメント](https://nextjs.org/docs) - Next.js の機能と API について学べます。
-- [Next.js を学ぶ](https://nextjs.org/learn-pages-router) - インタラクティブな Next.js チュートリアルです。
-
-[Next.js の GitHub リポジトリ](https://github.com/vercel/next.js) もぜひチェックしてください。フィードバックや貢献をお待ちしています！
-
-## Vercel へのデプロイ
-
-Next.js アプリをデプロイする最も簡単な方法は、Next.js の作成者による [Vercel プラットフォーム](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) を使用することです。
-
-詳細については、[Next.js のデプロイに関するドキュメント](https://nextjs.org/docs/pages/building-your-application/deploying) を参照してください。
+このプロジェクトは MIT ライセンスの下で公開されています。
