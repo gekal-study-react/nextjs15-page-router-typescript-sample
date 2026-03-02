@@ -12,13 +12,13 @@ export const ErrorFallback: React.FC<FallbackProps> = ({ error, resetErrorBounda
     >
       <Paper elevation={3} sx={{ p: 4, textAlign: 'center', maxWidth: 400 }}>
         <Typography variant="h5" color="error" gutterBottom>
-          Something went wrong
+          問題が発生しました
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-          {error instanceof Error ? error.message : 'An unexpected error occurred.'}
+          {error instanceof Error ? error.message : '予期しないエラーが発生しました。'}
         </Typography>
         <Button variant="contained" color="primary" onClick={resetErrorBoundary}>
-          Try Again
+          再試行
         </Button>
       </Paper>
     </Box>

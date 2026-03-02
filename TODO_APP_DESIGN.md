@@ -1,39 +1,39 @@
-# TODO App Design Document
+# TODO アプリ 設計書
 
-This document outlines the architecture and implementation details for a CSR (Client-Side Rendering) static site TODO application using Next.js 15 (Pages Router), TanStack Query, and MUI.
+このドキュメントでは、Next.js 15 (Pages Router)、TanStack Query、MUI を使用した CSR (クライアントサイドレンダリング) 静的サイト TODO アプリケーションのアーキテクチャと実装の詳細について説明します。
 
-## 1. Technology Stack
-- **Framework**: Next.js 15 (Pages Router)
-- **State Management**: TanStack Query (React Query) v5
-- **UI Framework**: MUI (Material UI) v6 with React 19 support
-- **Data Fetching**: Mock API using local storage or a simple object with delay to simulate fetching.
-- **Error Handling**: `react-error-boundary` with TanStack Query's `throwOnError: true` (default in `useSuspenseQuery`).
-- **Styling**: MUI's `sx` prop and Emotion.
+## 1. 技術スタック
+- **フレームワーク**: Next.js 15 (Pages Router)
+- **状態管理**: TanStack Query (React Query) v5
+- **UI フレームワーク**: MUI (Material UI) v7 (React 19 サポート)
+- **データ取得**: ローカルストレージを使用したモック API、または遅延を伴うシンプルなオブジェクトによる擬似的なデータ取得。
+- **エラーハンドリング**: `react-error-boundary` と TanStack Query の `throwOnError: true` (`useSuspenseQuery` ではデフォルト) を使用。
+- **スタイリング**: MUI の `sx` プロップと Emotion。
 
-## 2. Key Components & Implementation Details
+## 2. 主要コンポーネントと実装詳細
 - **`src/pages/_app.tsx`**:
-  - `QueryClientProvider` for TanStack Query.
-  - MUI `ThemeProvider` and `CssBaseline`.
-  - Global `ErrorBoundary` wrapper.
-  - `Suspense` wrapper for `useSuspenseQuery`.
+  - TanStack Query 用の `QueryClientProvider`。
+  - MUI の `ThemeProvider` と `CssBaseline`。
+  - グローバルな `ErrorBoundary` ラッパー。
+  - `useSuspenseQuery` 用の `Suspense` ラッパー。
 - **`src/hooks/useTodos.ts`**:
-  - Custom hooks for fetching, adding, updating, and deleting TODOs.
-  - Using `useSuspenseQuery` for fetching.
-  - Using `useMutation` for mutations.
+  - TODO の取得、追加、更新、削除を行うカスタムフック。
+  - 取得には `useSuspenseQuery` を使用。
+  - 更新系には `useMutation` を使用。
 - **`src/api/todoApi.ts`**:
-  - Mock API implementation using `localStorage` to simulate persistence and `setTimeout` to simulate network latency.
-- **Pages**:
-  - `/`: List of TODOs with a form to add new ones.
-  - `/todo/[id]`: Detail view of a specific TODO (to demonstrate multiple pages).
+  - 永続化をシミュレートするための `localStorage` と、ネットワーク遅延をシミュレートするための `setTimeout` を使用したモック API の実装。
+- **ページ**:
+  - `/`: TODO リストと新規追加用フォーム。
+  - `/todo/[id]`: 特定の TODO の詳細ビュー（複数ページのデモンストレーション用）。
 
-## 3. Global Error Handling
-- Use `ErrorBoundary` from `react-error-boundary`.
-- `useSuspenseQuery` will automatically throw errors to the nearest error boundary.
-- A fallback UI will be displayed when an error occurs, with a "Retry" button.
+## 3. グローバルエラーハンドリング
+- `react-error-boundary` の `ErrorBoundary` を使用。
+- `useSuspenseQuery` はエラーが発生すると、自動的に最も近いエラー境界にエラーをスローします。
+- エラー発生時には「再試行」ボタンを含むフォールバック UI が表示されます。
 
-## 4. UI Components (MUI)
-- `Container`, `Box`, `Typography`, `List`, `ListItem`, `TextField`, `Button`, `Checkbox`, `IconButton`, `CircularProgress` (for Suspense fallback).
-- `AppBar` for simple navigation.
+## 4. UI コンポーネント (MUI)
+- `Container`, `Box`, `Typography`, `List`, `ListItem`, `TextField`, `Button`, `Checkbox`, `IconButton`, `CircularProgress` (Suspense のフォールバック用)。
+- シンプルなナビゲーション用の `AppBar`。
 
-## 5. Persistence
-- TODOs will be saved in `localStorage` to persist data between page reloads in the CSR environment.
+## 5. 永続化
+- TODO は `localStorage` に保存され、CSR 環境でのページリロード間でもデータが保持されます。

@@ -21,19 +21,19 @@ const TodoDetail: React.FC = () => {
     <Box>
       <Link href="/" passHref legacyBehavior>
         <Button startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
-          Back to list
+          リストに戻る
         </Button>
       </Link>
       
       <Paper sx={{ p: 3 }}>
         <Typography variant="h5" component="h1" gutterBottom>
-          Todo Details
+          TODO 詳細
         </Typography>
         <Divider sx={{ mb: 2 }} />
         
         <Box sx={{ mb: 2 }}>
           <Typography variant="overline" color="text.secondary">
-            Title
+            タイトル
           </Typography>
           <Typography variant="body1">
             {todo.title}
@@ -42,16 +42,16 @@ const TodoDetail: React.FC = () => {
         
         <Box sx={{ mb: 2 }}>
           <Typography variant="overline" color="text.secondary">
-            Status
+            ステータス
           </Typography>
           <Typography variant="body1">
-            {todo.completed ? 'Completed' : 'Pending'}
+            {todo.completed ? '完了' : '未完了'}
           </Typography>
         </Box>
         
         <Box>
           <Typography variant="overline" color="text.secondary">
-            Created At
+            作成日時
           </Typography>
           <Typography variant="body1">
             {new Date(todo.createdAt).toLocaleString()}

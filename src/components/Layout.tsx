@@ -18,7 +18,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Toolbar>
           <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <Typography variant="h6" component="div">
-              TODO App
+              TODO アプリ
             </Typography>
           </Link>
         </Toolbar>

@@ -37,14 +37,14 @@ const TodoList: React.FC = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom align="center">
-        My TODOs
+        TODO リスト
       </Typography>
 
       <Paper component="form" onSubmit={handleAddTodo} sx={{ p: 2, mb: 4, display: 'flex', gap: 1 }}>
         <TextField
           fullWidth
           size="small"
-          placeholder="What needs to be done?"
+          placeholder="何をする必要がありますか？"
           value={newTodoTitle}
           onChange={(e) => setNewTodoTitle(e.target.value)}
           disabled={addTodo.isPending}
@@ -54,13 +54,13 @@ const TodoList: React.FC = () => {
           type="submit"
           disabled={addTodo.isPending || !newTodoTitle.trim()}
         >
-          Add
+          追加
         </Button>
       </Paper>
 
       {todos.length === 0 ? (
         <Typography variant="body1" color="text.secondary" align="center">
-          No todos yet. Add one above!
+          TODO がまだありません。上から追加してください！
         </Typography>
       ) : (
         <List>
