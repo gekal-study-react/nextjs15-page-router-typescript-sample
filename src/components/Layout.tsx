@@ -2,7 +2,7 @@ import React, {Suspense} from 'react';
 import {Container, AppBar, Toolbar, Typography, Box, CircularProgress, Backdrop} from '@mui/material';
 import {ErrorBoundary} from 'react-error-boundary';
 import {ErrorFallback} from './ErrorFallback';
-import {useQueryErrorResetBoundary, useIsMutating} from '@tanstack/react-query';
+import {useQueryErrorResetBoundary, useIsMutating, useIsFetching} from '@tanstack/react-query';
 import {useRouter} from 'next/router';
 
 interface LayoutProps {
@@ -13,6 +13,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
   const {reset} = useQueryErrorResetBoundary();
   const router = useRouter();
   const isMutating = useIsMutating();
+  const isFetching = useIsFetching();
 
   return (
     <Box sx={{flexGrow: 1}}>
@@ -50,7 +51,7 @@ export const Layout: React.FC<LayoutProps> = ({children}) => {
           flexDirection: 'column',
           gap: 2,
         }}
-        open={isMutating > 0}
+        open={isMutating > 0 || isFetching > 0}
       >
         <CircularProgress color="inherit"/>
         <Typography variant="h6" component="div">
