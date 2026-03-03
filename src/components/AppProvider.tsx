@@ -16,6 +16,8 @@ export const AppProvider: React.FC<LayoutProps> = ({children}) => {
   const isMutating = useIsMutating();
   const isFetching = useIsFetching();
 
+  const isLoading = isMutating > 0 || isFetching > 0;
+
   return (
     <Box sx={{flexGrow: 1}}>
       <AppBar position="static">
@@ -33,13 +35,13 @@ export const AppProvider: React.FC<LayoutProps> = ({children}) => {
       <Container maxWidth="sm" sx={{mt: 4}}>
         <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
           <Suspense
-            fallback={<Loading/>}
+            fallback={null}
           >
             {children}
           </Suspense>
         </ErrorBoundary>
       </Container>
-      {(isMutating > 0 || isFetching > 0) && <Loading/>}
+      {isLoading && <Loading/>}
     </Box>
   );
 };

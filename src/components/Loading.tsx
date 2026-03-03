@@ -1,5 +1,5 @@
 import React from 'react';
-import {Backdrop, CircularProgress, Typography} from '@mui/material';
+import {Backdrop, CircularProgress} from '@mui/material';
 
 export const Loading: React.FC = () => <Backdrop
   sx={{
@@ -11,7 +11,4 @@ export const Loading: React.FC = () => <Backdrop
   open={true}
 >
   <CircularProgress color="inherit"/>
-  <Typography variant="h6" component="div">
-    処理中...
-  </Typography>
 </Backdrop>

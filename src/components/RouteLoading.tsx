@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {Loading} from "@/components/Loading";
 
@@ -50,12 +50,10 @@ export const RouteLoading: React.FC<RouteLoadingProps> = ({children}) => {
       router.events.off('hashChangeStart', handleHashChangeStart);
       router.events.off('hashChangeComplete', handleHashChangeComplete);
     };
-  }, [router]);
+  }, [router.asPath, router.events]);
 
   if (loading) {
-    return (
-      <Loading/>
-    );
+    return (<Loading/>)
   }
 
   return <>{children}</>;

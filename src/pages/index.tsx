@@ -100,7 +100,7 @@ const TodoList: React.FC = () => {
                   edge="start"
                   checked={todo.completed}
                   onChange={() => toggleTodo.mutate(todo.id)}
-                  disabled={toggleTodo.isPending}
+                  disabled={false}
                 />
               </ListItemIcon>
               <ListItemText
