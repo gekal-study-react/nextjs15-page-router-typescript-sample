@@ -10,7 +10,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export const Layout: React.FC<LayoutProps> = ({children}) => {
+export const AppProvider: React.FC<LayoutProps> = ({children}) => {
   const {reset} = useQueryErrorResetBoundary();
   const router = useRouter();
   const isMutating = useIsMutating();

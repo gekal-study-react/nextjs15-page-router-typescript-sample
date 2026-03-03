@@ -1,11 +1,11 @@
 import "@/styles/globals.css";
 import type {AppProps} from "next/app";
-import {useEffect, useState} from 'react';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {useEffect} from 'react';
 import {createTheme, ThemeProvider} from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import {Layout} from '@/components/Layout';
-import {RouteLoading} from '@/components/RouteLoading';
+import {AppProvider} from '@/components/AppProvider';
+import {QueryProvider} from '@/components/QueryProvider';
+import {useState} from 'react';
 
 const theme = createTheme();
 
@@ -16,29 +16,18 @@ export default function App({Component, pageProps}: AppProps) {
     setMounted(true);
   }, []);
 
-  const [queryClient] = useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-        refetchOnWindowFocus: false,
-      },
-    },
-  }));
-
   if (!mounted) {
     return null;
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline/>
-        <RouteLoading>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </RouteLoading>
+        <AppProvider>
+          <Component {...pageProps} />
+        </AppProvider>
       </ThemeProvider>
-    </QueryClientProvider>
+    </QueryProvider>
   );
 }
