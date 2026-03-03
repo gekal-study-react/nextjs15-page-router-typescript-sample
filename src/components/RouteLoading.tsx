@@ -12,7 +12,7 @@ export const RouteLoading: React.FC<RouteLoadingProps> = ({children}) => {
 
   useEffect(() => {
     const handleRouterChangeStart = (url: string, {shallow}: { shallow: boolean }) => {
-      console.log("route change start", url, {shallow})
+      console.log("route change start", url, {shallow}, router.asPath)
       if (url !== router.asPath) {
         setLoading(true);
       }
