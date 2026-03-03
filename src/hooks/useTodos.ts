@@ -25,7 +25,29 @@ export const useAddTodo = () => {
     mutationFn: async (title: string) => {
       return await todoApi.addTodo(title)
     },
-    onSuccess: () => {
+    onMutate: async (newTodoTitle) => {
+      // 進行中のリフェッチをキャンセル
+      await queryClient.cancelQueries({queryKey: ['todos']});
+      // 現在のキャッシュを保存
+      const previousTodos = queryClient.getQueryData(['todos']);
+      // キャッシュを即座に更新（楽観的更新）
+      queryClient.setQueryData(['todos'], (old: any) => {
+        const tempTodo = {
+          id: 'temp-' + Date.now(),
+          title: newTodoTitle,
+          completed: false,
+          createdAt: new Date().toISOString(),
+        };
+        return [tempTodo, ...(old || [])];
+      });
+      return {previousTodos};
+    },
+    onError: (err, newTodoTitle, context) => {
+      // エラーが発生した場合は前の状態にロールバック
+      queryClient.setQueryData(['todos'], context?.previousTodos);
+    },
+    onSettled: () => {
+      // 成功・失敗に関わらず、サーバーの状態と同期するためにリフェッチ
       queryClient.invalidateQueries({queryKey: ['todos']});
     },
   });
@@ -37,9 +59,24 @@ export const useToggleTodo = () => {
     mutationFn: async (id: string) => {
       return await todoApi.toggleTodo(id)
     },
-    onSuccess: (updated) => {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({queryKey: ['todos']});
+      const previousTodos = queryClient.getQueryData<any[]>(['todos']);
+      queryClient.setQueryData(['todos'], (old: any[] | undefined) =>
+        old?.map((todo) =>
+          todo.id === id ? {...todo, completed: !todo.completed} : todo
+        )
+      );
+      return {previousTodos};
+    },
+    onError: (err, id, context) => {
+      queryClient.setQueryData(['todos'], context?.previousTodos);
+    },
+    onSettled: (updated) => {
       queryClient.invalidateQueries({queryKey: ['todos']});
-      queryClient.setQueryData(['todos', updated.id], updated);
+      if (updated) {
+        queryClient.setQueryData(['todos', updated.id], updated);
+      }
     },
   });
 };
@@ -50,7 +87,18 @@ export const useDeleteTodo = () => {
     mutationFn: async (id: string) => {
       await todoApi.deleteTodo(id)
     },
-    onSuccess: () => {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({queryKey: ['todos']});
+      const previousTodos = queryClient.getQueryData<any[]>(['todos']);
+      queryClient.setQueryData(['todos'], (old: any[] | undefined) =>
+        old?.filter((todo) => todo.id !== id)
+      );
+      return {previousTodos};
+    },
+    onError: (err, id, context) => {
+      queryClient.setQueryData(['todos'], context?.previousTodos);
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({queryKey: ['todos']});
     },
   });
