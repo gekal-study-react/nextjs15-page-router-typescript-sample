@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AppProvider } from "@/components/AppProvider";
 import { QueryProvider } from "@/components/QueryProvider";
+import { GlobalLoadingProvider } from "@/contexts/GlobalLoadingContext";
 
 const theme = createTheme();
 
@@ -21,12 +22,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <AppProvider>
-          <Component {...pageProps} />
-        </AppProvider>
-      </ThemeProvider>
+      <GlobalLoadingProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AppProvider>
+            <Component {...pageProps} />
+          </AppProvider>
+        </ThemeProvider>
+      </GlobalLoadingProvider>
     </QueryProvider>
   );
 }

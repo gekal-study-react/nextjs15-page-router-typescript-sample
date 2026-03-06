@@ -5,6 +5,8 @@ import { ErrorFallback } from "./ErrorFallback";
 import { useIsMutating, useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { Loading } from "@/components/Loading";
+import { SuspenseIndicator } from "./SuspenseIndicator";
+import { useGlobalLoading } from "@/contexts/GlobalLoadingContext";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -40,7 +42,8 @@ export const AppProvider: React.FC<LayoutProps> = ({ children }) => {
     };
   }, [router.asPath, router.events]);
 
-  const isLoading = isMutating > 0 || isRouteLoading;
+  const { isSuspenseLoading } = useGlobalLoading();
+  const isLoading = isMutating > 0 || isRouteLoading || isSuspenseLoading;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -58,7 +61,7 @@ export const AppProvider: React.FC<LayoutProps> = ({ children }) => {
       </AppBar>
       <Container maxWidth="sm" sx={{ mt: 4 }}>
         <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          <Suspense fallback={<SuspenseIndicator />}>{children}</Suspense>
         </ErrorBoundary>
       </Container>
       <Loading open={isLoading} />
