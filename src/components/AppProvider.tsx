@@ -62,7 +62,7 @@ export const AppProvider: React.FC<LayoutProps> = ({ children }) => {
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </ErrorBoundary>
       </Container>
-      {isLoading && <Loading />}
+      <Loading open={isLoading} />
     </Box>
   );
 };
