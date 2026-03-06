@@ -5,7 +5,6 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AppProvider } from "@/components/AppProvider";
 import { QueryProvider } from "@/components/QueryProvider";
-import { RouteLoading } from "@/components/RouteLoading";
 
 const theme = createTheme();
 
@@ -25,9 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppProvider>
-          <RouteLoading>
-            <Component {...pageProps} />
-          </RouteLoading>
+          <Component {...pageProps} />
         </AppProvider>
       </ThemeProvider>
     </QueryProvider>
