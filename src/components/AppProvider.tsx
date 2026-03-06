@@ -20,14 +20,21 @@ export const AppProvider: React.FC<LayoutProps> = ({ children }) => {
 
   useEffect(() => {
     const handleRouterChangeStart = (url: string, { shallow }: { shallow: boolean }) => {
+      console.debug("Router change start:", url, shallow);
       if (url !== router.asPath && !shallow) {
         setIsRouteLoading(true);
       }
     };
-    const handleRouterChangeComplete = () => {
+    const handleRouterChangeComplete = (url: string, { shallow }: { shallow: boolean }) => {
+      console.debug("Router change complete:", url, shallow);
       setIsRouteLoading(false);
     };
-    const handleRouterChangeError = () => {
+    const handleRouterChangeError = (
+      error: unknown,
+      url: string,
+      { shallow }: { shallow: boolean },
+    ) => {
+      console.error("Router change error:", error, url, shallow);
       setIsRouteLoading(false);
     };
 
