@@ -21,7 +21,7 @@ export const RouteLoading: React.FC<RouteLoadingProps> = ({children}) => {
       console.log("route change complete", url, {shallow})
       setLoading(false);
     };
-    const handleRouterChangeError = (err: any, url: string, {shallow}: { shallow: boolean }) => {
+    const handleRouterChangeError = (err: unknown, url: string, {shallow}: { shallow: boolean }) => {
       console.log("route change error", err, url, {shallow})
       setLoading(false);
     };

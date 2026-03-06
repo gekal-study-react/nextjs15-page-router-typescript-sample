@@ -1,5 +1,5 @@
 import {useSuspenseQuery, useMutation, useQueryClient} from '@tanstack/react-query';
-import {todoApi} from '@/api/todoApi';
+import {todoApi, Todo} from '@/api/todoApi';
 
 export const useTodos = () => {
   return useSuspenseQuery({
@@ -29,10 +29,10 @@ export const useAddTodo = () => {
       // 進行中のリフェッチをキャンセル
       await queryClient.cancelQueries({queryKey: ['todos']});
       // 現在のキャッシュを保存
-      const previousTodos = queryClient.getQueryData(['todos']);
+      const previousTodos = queryClient.getQueryData<Todo[]>(['todos']);
       // キャッシュを即座に更新（楽観的更新）
-      queryClient.setQueryData(['todos'], (old: any) => {
-        const tempTodo = {
+      queryClient.setQueryData<Todo[]>(['todos'], (old) => {
+        const tempTodo: Todo = {
           id: 'temp-' + Date.now(),
           title: newTodoTitle,
           completed: false,
@@ -61,8 +61,8 @@ export const useToggleTodo = () => {
     },
     onMutate: async (id) => {
       await queryClient.cancelQueries({queryKey: ['todos']});
-      const previousTodos = queryClient.getQueryData<any[]>(['todos']);
-      queryClient.setQueryData(['todos'], (old: any[] | undefined) =>
+      const previousTodos = queryClient.getQueryData<Todo[]>(['todos']);
+      queryClient.setQueryData<Todo[]>(['todos'], (old) =>
         old?.map((todo) =>
           todo.id === id ? {...todo, completed: !todo.completed} : todo
         )
@@ -89,8 +89,8 @@ export const useDeleteTodo = () => {
     },
     onMutate: async (id) => {
       await queryClient.cancelQueries({queryKey: ['todos']});
-      const previousTodos = queryClient.getQueryData<any[]>(['todos']);
-      queryClient.setQueryData(['todos'], (old: any[] | undefined) =>
+      const previousTodos = queryClient.getQueryData<Todo[]>(['todos']);
+      queryClient.setQueryData<Todo[]>(['todos'], (old) =>
         old?.filter((todo) => todo.id !== id)
       );
       return {previousTodos};
