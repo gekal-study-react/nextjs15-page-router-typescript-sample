@@ -1,16 +1,15 @@
 import "@/styles/globals.css";
-import type {AppProps} from "next/app";
-import {useEffect} from 'react';
-import {createTheme, ThemeProvider} from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
-import {AppProvider} from '@/components/AppProvider';
-import {QueryProvider} from '@/components/QueryProvider';
-import {RouteLoading} from '@/components/RouteLoading';
-import {useState} from 'react';
+import type { AppProps } from "next/app";
+import { useEffect, useState } from "react";
+import { createTheme, ThemeProvider } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import { AppProvider } from "@/components/AppProvider";
+import { QueryProvider } from "@/components/QueryProvider";
+import { RouteLoading } from "@/components/RouteLoading";
 
 const theme = createTheme();
 
-export default function App({Component, pageProps}: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export default function App({Component, pageProps}: AppProps) {
   return (
     <QueryProvider>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
+        <CssBaseline />
         <AppProvider>
           <RouteLoading>
             <Component {...pageProps} />

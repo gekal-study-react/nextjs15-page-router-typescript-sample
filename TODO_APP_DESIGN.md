@@ -13,25 +13,28 @@
 ## 2. 実装のポイント
 
 ### データフェッチ (`useSuspenseQuery`)
+
 React の Suspense 機能を活用し、データ取得中のローディング状態を宣言的に記述しています。
 `useSuspenseQuery` を使用することで、データが利用可能な状態であることを前提にコンポーネントを記述でき、コードの可読性を高めています。
 
 ### モック API 層
+
 `src/api/todoApi.ts` では、`localStorage` を利用した擬似的な API レイヤーを実装しています。
 ネットワーク遅延（`setTimeout`）やランダムなエラーを意図的に発生させることで、実際の Web アプリケーションに近い挙動をシミュレートしています。
 
 ### グローバルエラーハンドリング
+
 `react-error-boundary` を使用し、データ取得エラーが発生した際にアプリケーション全体がクラッシュするのを防いでいます。
 エラー発生時には `ErrorFallback` コンポーネントが表示され、ユーザーが「再試行」をクリックすることで、TanStack Query のキャッシュをリセットし再取得を試みることができます。
 
 ## 3. ディレクトリ構成
 
-- **`src/pages`**: 
+- **`src/pages`**:
   - `_app.tsx`: 各種 Provider の設定と `Layout` コンポーネント（AppBar, Container, ErrorBoundary, Suspense）による全ページのラップ
   - `index.tsx`: TODO リスト一覧と追加フォーム
   - `todo/[id].tsx`: TODO の詳細表示
 - **`src/hooks/useTodos.ts`**: TanStack Query をラップしたカスタムフック群。ロジックをコンポーネントから分離。
-- **`src/components`**: 
+- **`src/components`**:
   - `Layout.tsx`: 共通レイアウト（AppBar, Container）と Suspense/ErrorBoundary の配置
   - `ErrorFallback.tsx`: エラー時の UI
   - `RouteLoading.tsx`: ページ遷移中のローディング UI と `router.events` の制御

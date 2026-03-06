@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   Typography,
   TextField,
@@ -11,35 +11,45 @@ import {
   IconButton,
   Paper,
   Box,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import {useRouter} from 'next/router';
-import {useTodos, useAddTodo, useToggleTodo, useDeleteTodo} from '@/hooks/useTodos';
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { useRouter } from "next/router";
+import { useTodos, useAddTodo, useToggleTodo, useDeleteTodo } from "@/hooks/useTodos";
 
 const TodoList: React.FC = () => {
   const router = useRouter();
-  const {data: todos} = useTodos();
+  const { data: todos } = useTodos();
   const addTodo = useAddTodo();
   const toggleTodo = useToggleTodo();
   const deleteTodo = useDeleteTodo();
-  const [newTodoTitle, setNewTodoTitle] = useState('');
+  const [newTodoTitle, setNewTodoTitle] = useState("");
 
   const handleAddTodo = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (newTodoTitle.trim()) {
       addTodo.mutate(newTodoTitle);
-      setNewTodoTitle('');
+      setNewTodoTitle("");
     }
   };
 
   return (
     <Box>
-      <Typography variant="h4" component="h1" gutterBottom align="center" sx={{fontWeight: 'bold', mt: 2}}>
+      <Typography
+        variant="h4"
+        component="h1"
+        gutterBottom
+        align="center"
+        sx={{ fontWeight: "bold", mt: 2 }}
+      >
         TODO リスト
       </Typography>
 
-      <Paper component="form" onSubmit={handleAddTodo} sx={{p: 2, mb: 4, display: 'flex', gap: 1, borderRadius: 2}}>
+      <Paper
+        component="form"
+        onSubmit={handleAddTodo}
+        sx={{ p: 2, mb: 4, display: "flex", gap: 1, borderRadius: 2 }}
+      >
         <TextField
           fullWidth
           size="small"
@@ -52,14 +62,14 @@ const TodoList: React.FC = () => {
           variant="contained"
           type="submit"
           disabled={addTodo.isPending || !newTodoTitle.trim()}
-          sx={{minWidth: 80}}
+          sx={{ minWidth: 80 }}
         >
           追加
         </Button>
       </Paper>
 
       {todos.length === 0 ? (
-        <Typography variant="body1" color="text.secondary" align="center" sx={{mt: 8}}>
+        <Typography variant="body1" color="text.secondary" align="center" sx={{ mt: 8 }}>
           登録されているタスクはありません。
         </Typography>
       ) : (
@@ -70,7 +80,7 @@ const TodoList: React.FC = () => {
               disablePadding
               sx={{
                 mb: 1,
-                bgcolor: 'background.paper',
+                bgcolor: "background.paper",
                 borderRadius: 1,
                 boxShadow: 1,
               }}
@@ -81,21 +91,21 @@ const TodoList: React.FC = () => {
                     aria-label="details"
                     onClick={() => router.push(`/todo/${todo.id}`)}
                   >
-                    <ArrowForwardIosIcon fontSize="small"/>
+                    <ArrowForwardIosIcon fontSize="small" />
                   </IconButton>
                   <IconButton
                     edge="end"
                     aria-label="delete"
                     onClick={() => deleteTodo.mutate(todo.id)}
                     disabled={deleteTodo.isPending}
-                    sx={{ml: 1}}
+                    sx={{ ml: 1 }}
                   >
-                    <DeleteIcon/>
+                    <DeleteIcon />
                   </IconButton>
                 </>
               }
             >
-              <ListItemIcon sx={{pl: 2}}>
+              <ListItemIcon sx={{ pl: 2 }}>
                 <Checkbox
                   edge="start"
                   checked={todo.completed}
@@ -106,8 +116,8 @@ const TodoList: React.FC = () => {
               <ListItemText
                 primary={todo.title}
                 sx={{
-                  textDecoration: todo.completed ? 'line-through' : 'none',
-                  color: todo.completed ? 'text.secondary' : 'text.primary',
+                  textDecoration: todo.completed ? "line-through" : "none",
+                  color: todo.completed ? "text.secondary" : "text.primary",
                 }}
               />
             </ListItem>
@@ -119,7 +129,5 @@ const TodoList: React.FC = () => {
 };
 
 export default function Home() {
-  return (
-    <TodoList/>
-  );
+  return <TodoList />;
 }

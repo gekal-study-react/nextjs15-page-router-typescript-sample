@@ -5,10 +5,10 @@ export interface Todo {
   createdAt: string;
 }
 
-const STORAGE_KEY = 'todo-app-data';
+const STORAGE_KEY = "todo-app-data";
 
 const getTodosFromStorage = (): Todo[] => {
-  if (typeof window === 'undefined') return [];
+  if (typeof window === "undefined") return [];
   const data = localStorage.getItem(STORAGE_KEY);
   return data ? JSON.parse(data) : [];
 };
@@ -24,7 +24,7 @@ export const todoApi = {
     await delay(1000);
     // Simulate random error (10% chance)
     if (Math.random() < 0.1) {
-      throw new Error('データの取得に失敗しました');
+      throw new Error("データの取得に失敗しました");
     }
     return getTodosFromStorage();
   },
@@ -55,12 +55,10 @@ export const todoApi = {
   toggleTodo: async (id: string): Promise<Todo> => {
     await delay(300);
     const todos = getTodosFromStorage();
-    const updatedTodos = todos.map((t) =>
-      t.id === id ? {...t, completed: !t.completed} : t
-    );
+    const updatedTodos = todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t));
     saveTodosToStorage(updatedTodos);
     const updated = updatedTodos.find((t) => t.id === id);
-    if (!updated) throw new Error('Todo not found');
+    if (!updated) throw new Error("Todo not found");
     return updated;
   },
 
