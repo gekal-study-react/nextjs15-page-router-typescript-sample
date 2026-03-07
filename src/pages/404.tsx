@@ -38,7 +38,7 @@ export default function Custom404() {
             variant="outlined"
             size="large"
             startIcon={<RefreshIcon />}
-            onClick={() => router.reload()}
+            onClick={() => router.push(router.asPath, undefined, { shallow: true })}
             sx={{ px: 4, py: 1.5, borderRadius: 10, borderWidth: 2, "&:hover": { borderWidth: 2 } }}
           >
             リロードする
