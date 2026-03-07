@@ -41,7 +41,6 @@ export default function Custom404() {
         alignItems="center"
         minHeight="65vh"
       >
-        <CircularProgress size={60} thickness={4} />
         <Typography variant="body1" sx={{ mt: 3, color: "text.secondary" }}>
           読み込み中...
         </Typography>
