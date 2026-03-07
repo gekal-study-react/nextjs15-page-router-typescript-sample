@@ -56,7 +56,7 @@ export default function TodoDetailPage() {
   const router = useRouter();
 
   // Wait for router to be ready to get the ID
-  if (!router.isReady) return null;
+  if (!router.isReady || !router.query.id) return null;
 
   return <TodoDetail />;
 }
