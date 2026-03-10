@@ -1,11 +1,11 @@
 import React from "react";
-import {Backdrop, BackdropProps} from "@mui/material";
+import { Backdrop, BackdropProps } from "@mui/material";
 
 interface AppBackdropProps extends Omit<BackdropProps, "children"> {
   children?: React.ReactNode;
 }
 
-export const AppBackdrop: React.FC<AppBackdropProps> = ({children, sx, ...props}) => {
+export const AppBackdrop: React.FC<AppBackdropProps> = ({ children, sx, ...props }) => {
   return (
     <Backdrop
       sx={{
@@ -15,7 +15,6 @@ export const AppBackdrop: React.FC<AppBackdropProps> = ({children, sx, ...props}
         gap: 2,
         ...sx,
       }}
-      key={props.open ? "backdrop" : "backdrop-closed"}
       {...props}
     >
       {children}
